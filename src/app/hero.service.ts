@@ -22,12 +22,12 @@ export class HeroService {
         return Promise.reject(error.message || error);
     }
 
-    getHeroesSlowly(): Promise<Hero[]> {
+   /* getHeroesSlowly(): Promise<Hero[]> {
         return new Promise(resolve => {
             // Simulate server latency with 2 second delay
             setTimeout(() => resolve(this.getHeroes()), 2000);
         });
-    }
+    }*/
 
     getHero(id: number): Promise<Hero> {
         const url = `${this.heroesUrl}/${id}`;
@@ -54,4 +54,11 @@ export class HeroService {
             .catch(this.handleError);
     }
 
+    delete(id: number): Promise<void> {
+        const url = `${this.heroesUrl}/${id}`;
+        return this.http.delete(url, {headers: this.headers})
+            .toPromise()
+            .then(() => null)
+            .catch(this.handleError);
+    }
 }
